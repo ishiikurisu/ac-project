@@ -50,7 +50,7 @@ void serialEvent() {
             value = average(temperature)*500.0/1024.0-2;
             Serial.println(value);
         } else if (line[i] == 'l' || line[i] == 'L') {
-            value = average(light);
+            value = average(light)*5000.0/1024.0;
             Serial.println(value);
         }
     }
