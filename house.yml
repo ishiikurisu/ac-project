@@ -1,5 +1,10 @@
 ---
+build:
+  local: true
+  commands:
+  - rake test
 execute:
   local: true
   commands:
-  - rake do
+  - rake run
+---
