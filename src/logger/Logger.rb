@@ -18,5 +18,6 @@ class Logger
         File.open @where, 'a' do |fp|
             fp.write line
         end
+        return timestamp
     end
 end
