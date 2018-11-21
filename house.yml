@@ -1,0 +1,5 @@
+---
+execute:
+  local: true
+  commands:
+  - rake do
