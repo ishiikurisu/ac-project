@@ -5,6 +5,7 @@ require "./src/weather/Arduino.rb"
 
 def log_from_the_internet logger
     Thread.new do
+        half_hour = 60*30 # seconds
         config = YAML.load_file './b/secrets.yml'
         reporter = WeatherReporter.new config['OWM_API']
         loop do
@@ -14,13 +15,14 @@ def log_from_the_internet logger
             }
             timestamp = logger.add entry
             puts "new internet entry at #{timestamp}"
-            sleep 120 # seconds
+            sleep half_hour
         end
     end
 end
 
 def log_from_arduino logger
     Thread.new do
+        half_hour = 60*30 # seconds
         config = YAML.load_file './b/secrets.yml'
         arduino = Arduino.new config['ARDUINO']
         arduino.temperature
@@ -38,7 +40,7 @@ def log_from_arduino logger
             }
             timestamp = logger.add entry
             puts "new arduino light entry at #{timestamp}"
-            sleep 120 # seconds
+            sleep half_hour
         end
     end
 end
