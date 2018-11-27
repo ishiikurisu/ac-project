@@ -3,12 +3,14 @@ require './src/logger/Logger.rb'
 require "./src/weather/WeatherReporter.rb"
 require "./src/weather/Arduino.rb"
 
+$r = true
+
 def log_from_the_internet logger
     Thread.new do
         half_hour = 60*30 # seconds
         config = YAML.load_file './b/secrets.yml'
         reporter = WeatherReporter.new config['OWM_API']
-        loop do
+        while $r
             entry = {
                 'kind' => 'owm',
                 'value' => reporter.temperature
@@ -27,7 +29,7 @@ def log_from_arduino logger
         arduino = Arduino.new config['ARDUINO']
         arduino.temperature
         arduino.light
-        loop do
+        while $r
             entry = {
                 'kind' => 'uno temp',
                 'value' => arduino.temperature
@@ -49,6 +51,6 @@ if __FILE__ == $0
     logger = Logger.new
     log_from_the_internet logger
     log_from_arduino logger
-    puts "Press [enter] to end logging"
+    puts "Press [^C] to end logging"
     gets
 end
